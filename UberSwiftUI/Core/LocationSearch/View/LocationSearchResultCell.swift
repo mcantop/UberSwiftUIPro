@@ -10,6 +10,8 @@ import SwiftUI
 struct LocationSearchResultCell: View {
     // MARK: - Properties
     @Environment(\.colorScheme) var scheme
+    let name: String
+    let address: String
     
     // MARK: - Body
     var body: some View {
@@ -24,13 +26,13 @@ struct LocationSearchResultCell: View {
                 
                 VStack(alignment: .leading) {
                     // MARK: - Location Name
-                    Text("Starbucks Coffee")
+                    Text(name)
                         .fontWeight(.medium)
                     
                     Spacer(minLength: 0)
                     
                     // MARK: - Location Address
-                    Text("Warsaw")
+                    Text(address)
                         .fontWeight(.regular)
                         .foregroundColor(.gray)
                 }
@@ -49,6 +51,6 @@ struct LocationSearchResultCell: View {
 
 struct LocationSearchResultCell_Previews: PreviewProvider {
     static var previews: some View {
-        LocationSearchResultCell()
+        LocationSearchResultCell(name: "Starbucks Coffee", address: "Warsaw")
     }
 }

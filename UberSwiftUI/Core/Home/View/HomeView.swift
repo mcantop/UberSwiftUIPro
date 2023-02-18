@@ -34,7 +34,7 @@ struct HomeView: View {
                 .background(showLocationSearchView ? .white : .white.opacity(0))
                 
                 if showLocationSearchView {
-                    LocationSearchView()
+                    LocationSearchView(showLocationSearchView: $showLocationSearchView)
                 }
             }
         }
@@ -44,5 +44,6 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
+            .environmentObject(LocationSearchViewModel())
     }
 }

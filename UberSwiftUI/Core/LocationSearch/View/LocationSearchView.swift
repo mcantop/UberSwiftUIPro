@@ -9,9 +9,9 @@ import SwiftUI
 
 struct LocationSearchView: View {
     // MARK: - Properties
+    @Binding var showLocationSearchView: Bool
     @Environment(\.colorScheme) var scheme
-    @State private var startLocationText = ""
-    @State private var destinationLocationText = ""
+    @EnvironmentObject var locationViewModel: LocationSearchViewModel
     
     // MARK: - Body
     var body: some View {
@@ -52,7 +52,7 @@ struct LocationSearchView: View {
                                 .clipShape(Capsule())
                                 .frame(maxHeight: .infinity)
                             
-                            TextField("Where to?", text: $destinationLocationText)
+                            TextField("Where to?", text: $locationViewModel.queryFragment)
                                 .padding(.horizontal, 12)
                                 .padding(.vertical, 8)
                                 .background(.gray.opacity(0.25))
@@ -71,8 +71,14 @@ struct LocationSearchView: View {
             // MARK: - ScrollView
             ScrollView(showsIndicators: false) {
                 VStack {
-                    ForEach(0...20, id: \.self) { _ in
-                        LocationSearchResultCell()
+                    ForEach(locationViewModel.results, id: \.self) { result in
+                        LocationSearchResultCell(name: result.title, address: result.subtitle)
+                            .onTapGesture {
+                                withAnimation(.easeInOut(duration: 0.25)) {
+                                    locationViewModel.selectLocation(result.title)
+                                    showLocationSearchView.toggle()
+                                }
+                            }
                     }
                 }
             }
@@ -83,6 +89,7 @@ struct LocationSearchView: View {
 
 struct LocationSearchView_Previews: PreviewProvider {
     static var previews: some View {
-        LocationSearchView()
+        LocationSearchView(showLocationSearchView: .constant(false))
+            .environmentObject(LocationSearchViewModel())
     }
 }
