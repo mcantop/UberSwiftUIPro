@@ -8,16 +8,22 @@
 import SwiftUI
 
 struct MapViewActionButton: View {
+    // MARK: - Properties
     @Environment(\.colorScheme) var scheme
     @Binding var showLocationSearchView: Bool
     
+    private var imageName: String {
+        return showLocationSearchView ? "arrow.left" : "line.3.horizontal"
+    }
+    
+    // MARK: - Body
     var body: some View {
         Button {
             withAnimation(.easeInOut(duration: 0.25)) {
                 showLocationSearchView.toggle()
             }
         } label: {
-            Image(systemName: showLocationSearchView ? "arrow.left" : "line.3.horizontal")
+            Image(systemName: imageName)
                 .font(.title3)
                 .fontWeight(.semibold)
                 .foregroundColor(.primary)

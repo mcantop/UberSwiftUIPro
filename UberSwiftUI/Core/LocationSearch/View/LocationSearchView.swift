@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct LocationSearchView: View {
+    // MARK: - Properties
     @Environment(\.colorScheme) var scheme
     @State private var startLocationText = ""
     @State private var destinationLocationText = ""
     
+    // MARK: - Body
     var body: some View {
         VStack(spacing: 0) {
-            // MARK: - Header TextFields
+            // MARK: - Header
             ZStack {
                 Rectangle()
                     .fill(.white)
@@ -33,7 +35,7 @@ struct LocationSearchView: View {
                             RoundedRectangle(cornerRadius: 8)
                                 .frame(width: 2, height: 25)
                             
-                            RoundedRectangle(cornerRadius: 3)
+                            RoundedRectangle(cornerRadius: 4)
                                 .frame(width: 10, height: 10)
                         }
                         .frame(width: 50)
@@ -48,14 +50,14 @@ struct LocationSearchView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .background(.gray.opacity(0.15))
                                 .clipShape(Capsule())
-//                                .capsuleOverlay()
+                                .frame(maxHeight: .infinity)
                             
                             TextField("Where to?", text: $destinationLocationText)
                                 .padding(.horizontal, 12)
                                 .padding(.vertical, 8)
                                 .background(.gray.opacity(0.25))
                                 .clipShape(Capsule())
-//                                .capsuleOverlay()
+                                .frame(maxHeight: .infinity)
                         }
                         
                         Spacer(minLength: 0).frame(width: 12)

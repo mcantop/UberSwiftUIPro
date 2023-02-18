@@ -162,8 +162,8 @@
 		52FF40DD299F2779009B2F8B /* View */ = {
 			isa = PBXGroup;
 			children = (
-				52FF40E1299F27B4009B2F8B /* LocationSearchActivationView.swift */,
 				520EBF9B299F32CD00996677 /* LocationSearchView.swift */,
+				52FF40E1299F27B4009B2F8B /* LocationSearchActivationView.swift */,
 				520EBFA2299F468E00996677 /* LocationSearchResultCell.swift */,
 			);
 			path = View;

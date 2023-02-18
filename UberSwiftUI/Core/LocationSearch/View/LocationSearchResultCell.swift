@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct LocationSearchResultCell: View {
+    // MARK: - Properties
     @Environment(\.colorScheme) var scheme
     
+    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Spacer(minLength: 0).frame(height: 12)
@@ -21,11 +23,13 @@ struct LocationSearchResultCell: View {
                     .frame(width: 50, height: 50)
                 
                 VStack(alignment: .leading) {
+                    // MARK: - Location Name
                     Text("Starbucks Coffee")
                         .fontWeight(.medium)
                     
                     Spacer(minLength: 0)
                     
+                    // MARK: - Location Address
                     Text("Warsaw")
                         .fontWeight(.regular)
                         .foregroundColor(.gray)

@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct LocationSearchActivationView: View {
+    // MARK: - Properties
     @Environment(\.colorScheme) var scheme
+    @Binding var showLocationSearchView: Bool
 
+    // MARK: - Body
     var body: some View {
         HStack(spacing: 12) {
             Image(systemName: "magnifyingglass")
@@ -26,11 +29,16 @@ struct LocationSearchActivationView: View {
         .background(scheme == .light ? .white : .black)
         .capsuleOverlay()
         .clipShape(Capsule())
+        .onTapGesture {
+            withAnimation(.easeInOut(duration: 0.25)) {
+                showLocationSearchView.toggle()
+            }
+        }
     }
 }
 
 struct LocationSearchActivationView_Previews: PreviewProvider {
     static var previews: some View {
-        LocationSearchActivationView()
+        LocationSearchActivationView(showLocationSearchView: .constant(true))
     }
 }
