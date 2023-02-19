@@ -19,9 +19,14 @@ struct LocationSearchView: View {
             // MARK: - Header
             ZStack {
                 Rectangle()
-                    .fill(.white)
+                    .fill(scheme == .light ? .white : .black)
                     .frame(height: 102)
-                    .shadow(color: .black.opacity(0.12), radius: 5, y: 10)
+                    .shadow(
+                        color: scheme == .light
+                        ? .black.opacity(0.12)
+                        : .white.opacity(0.12),
+                        radius: 5, y: 10
+                    )
                 
                 VStack(spacing: 0) {
                     HStack(spacing: 0) {

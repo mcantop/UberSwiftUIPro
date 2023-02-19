@@ -89,7 +89,7 @@ extension UberMapViewRepresentable {
             parent.mapView.addAnnotation(annotation)
             parent.mapView.selectAnnotation(annotation, animated: true)
             /// Changes MapView to fit user and annotation on a screen.
-            parent.mapView.showAnnotations(parent.mapView.annotations, animated: true)
+//            parent.mapView.showAnnotations(parent.mapView.annotations, animated: true)
         }
         
         func getDestinationRoute(from userLocation: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D, completion: @escaping(MKRoute) -> Void) {
@@ -120,6 +120,12 @@ extension UberMapViewRepresentable {
                 to: destinationCoordinate
             ) { route in
                 self.parent.mapView.addOverlay(route.polyline)
+                
+                let rect = self.parent.mapView.mapRectThatFits(
+                    route.polyline.boundingMapRect,
+                    edgePadding: .init(top: 64, left: 32, bottom: 475, right: 32)
+                )
+                self.parent.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
             }
         }
         

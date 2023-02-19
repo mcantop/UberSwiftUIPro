@@ -9,7 +9,16 @@ import SwiftUI
 
 struct HomeView: View {
     // MARK: - Properties
+    @Environment(\.colorScheme) var scheme
     @State private var mapState: MapState = .noInput
+    @State private var showingSheet: Bool = false
+    private var showingSheetBinding: Binding<Bool> {
+        Binding(get: {
+            self.mapState == .locationSelected
+        }) { _ in
+            self.showingSheet = true
+        }
+    }
     
     // MARK: - Body
     var body: some View {
@@ -31,12 +40,24 @@ struct HomeView: View {
                 }
                 .padding(.horizontal, 12)
                 .padding(.vertical, 4)
-                .background(mapState == .searchingForLocation ? .white : .white.opacity(0))
+                .background(
+                    mapState == .searchingForLocation
+                    ? scheme == .light ? .white : .black
+                    : scheme == .light ? .white.opacity(0) : .black.opacity(0)
+                )
                 
                 if mapState == .searchingForLocation {
                     LocationSearchView(mapState: $mapState)
                 }
             }
+        }
+        // MARK: - Bottom Sheet
+        .sheet(isPresented: showingSheetBinding, onDismiss: {
+            mapState = .noInput
+        }) {
+            RideRequestView()
+                .presentationDetents([.height(460)])
+                .presentationDragIndicator(.visible)
         }
     }
 }
