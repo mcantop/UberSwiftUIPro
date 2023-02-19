@@ -10,7 +10,7 @@ import SwiftUI
 struct LocationSearchActivationView: View {
     // MARK: - Properties
     @Environment(\.colorScheme) var scheme
-    @Binding var showLocationSearchView: Bool
+    @Binding var mapState: MapState
 
     // MARK: - Body
     var body: some View {
@@ -31,7 +31,7 @@ struct LocationSearchActivationView: View {
         .clipShape(Capsule())
         .onTapGesture {
             withAnimation(.easeInOut(duration: 0.25)) {
-                showLocationSearchView.toggle()
+                mapState = .searchingForLocation
             }
         }
     }
@@ -39,6 +39,6 @@ struct LocationSearchActivationView: View {
 
 struct LocationSearchActivationView_Previews: PreviewProvider {
     static var previews: some View {
-        LocationSearchActivationView(showLocationSearchView: .constant(true))
+        LocationSearchActivationView(mapState: .constant(.searchingForLocation))
     }
 }

@@ -9,32 +9,32 @@ import SwiftUI
 
 struct HomeView: View {
     // MARK: - Properties
-    @State private var showLocationSearchView = false
+    @State private var mapState: MapState = .noInput
     
     // MARK: - Body
     var body: some View {
         ZStack(alignment: .top) {
             // MARK: - MapView
-            UberMapViewRepresentable()
+            UberMapViewRepresentable(mapState: $mapState)
                 .ignoresSafeArea()
             
             // MARK: - Header
             VStack(spacing: 0) {
                 HStack(spacing: 8) {
-                    MapViewActionButton(showLocationSearchView: $showLocationSearchView)
+                    MapViewActionButton(mapState: $mapState)
                     
-                    if !showLocationSearchView {
-                        LocationSearchActivationView(showLocationSearchView: $showLocationSearchView)
+                    if mapState == .noInput {
+                        LocationSearchActivationView(mapState: $mapState)
                     } else {
                         Spacer()
                     }
                 }
                 .padding(.horizontal, 12)
                 .padding(.vertical, 4)
-                .background(showLocationSearchView ? .white : .white.opacity(0))
+                .background(mapState == .searchingForLocation ? .white : .white.opacity(0))
                 
-                if showLocationSearchView {
-                    LocationSearchView(showLocationSearchView: $showLocationSearchView)
+                if mapState == .searchingForLocation {
+                    LocationSearchView(mapState: $mapState)
                 }
             }
         }
