@@ -37,12 +37,12 @@ private extension MapViewActionButton {
     func actionForState(_ state: MapState) {
         switch state {
         case .noInput:
-            print("DEBUG: No input..")
+            break
         case .searchingForLocation:
             mapState = .noInput
-        case .locationSelected:
+        case .locationSelected, .polylineAdded:
             mapState = .noInput
-            locationViewModel.selectedCoordinate = nil
+            locationViewModel.selectedUberLocation = nil
         }
     }
     
@@ -50,10 +50,11 @@ private extension MapViewActionButton {
         switch state {
         case .noInput:
             return "line.3.horizontal"
-        case .searchingForLocation:
+        case .searchingForLocation,
+                .locationSelected:
             return "arrow.left"
-        case .locationSelected:
-            return "arrow.left"
+        default:
+            return "line.3.horizontal"
         }
     }
 }

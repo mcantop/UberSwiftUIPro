@@ -10,6 +10,7 @@ import SwiftUI
 struct RideRequestView: View {
     // MARK: - Properties
     @Environment(\.colorScheme) var scheme
+    @EnvironmentObject var locationViewModel: LocationSearchViewModel
     @State private var selectedRideType: RideType = .uberX
     private let rows = [
         GridItem(.flexible(), spacing: 12),
@@ -46,17 +47,17 @@ struct RideRequestView: View {
                             Text("Current location")
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                             
-                            Text("00:00 PM")
+                            Text(locationViewModel.pickupTime ?? "")
                         }
                         .foregroundColor(.gray)
                         
                         Spacer()
                         
                         HStack {
-                            Text("Starbucks")
+                            Text(locationViewModel.selectedUberLocation?.title ?? "")
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                             
-                            Text("00:00 PM")
+                            Text(locationViewModel.dropOffTime ?? "")
                         }
                         .fontWeight(.semibold)
                     }
@@ -146,5 +147,6 @@ struct RideRequestView: View {
 struct RideRequestView_Previews: PreviewProvider {
     static var previews: some View {
         RideRequestView()
+            .environmentObject(LocationSearchViewModel())
     }
 }

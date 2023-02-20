@@ -25,15 +25,13 @@ struct UberMapViewRepresentable: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UIViewType, context: Context) {
-        print("DEBUG: Map state is - \(mapState)")
-        
         switch mapState {
         case .noInput:
             context.coordinator.clearMapViewRecenter()
-        case .searchingForLocation:
+        case .searchingForLocation, .polylineAdded:
             break
         case .locationSelected:
-            if let coordinate = locationViewModel.selectedCoordinate {
+            if let coordinate = locationViewModel.selectedUberLocation?.coordinate {
                 context.coordinator.addAndSelectAnnotation(coordinate: coordinate)
                 context.coordinator.configurePolyline(destinationCoordinate: coordinate)
             }
@@ -68,7 +66,9 @@ extension UberMapViewRepresentable {
             
             currentRegion = region
             
-            parent.mapView.setRegion(region, animated: true)
+            if parent.mapState != .polylineAdded {
+                parent.mapView.setRegion(region, animated: true)
+            }
         }
         
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
@@ -92,39 +92,21 @@ extension UberMapViewRepresentable {
 //            parent.mapView.showAnnotations(parent.mapView.annotations, animated: true)
         }
         
-        func getDestinationRoute(from userLocation: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D, completion: @escaping(MKRoute) -> Void) {
-            let userPlacemark = MKPlacemark(coordinate: userLocation)
-            let destinationPlacemark = MKPlacemark(coordinate: destination)
-            
-            let request = MKDirections.Request()
-            request.source = MKMapItem(placemark: userPlacemark)
-            request.destination = MKMapItem(placemark: destinationPlacemark)
-            
-            let directions = MKDirections(request: request)
-            directions.calculate { response, error in
-                if let error = error {
-                    print("DEBUG: Failed to get directions with error - \(error.localizedDescription)")
-                    return
-                }
-                
-                guard let route = response?.routes.first else { return }
-                completion(route)
-            }
-        }
-        
         func configurePolyline(destinationCoordinate: CLLocationCoordinate2D) {
             guard let userLocationCoordinate = userLocationCoordinate else { return }
             
-            getDestinationRoute(
+            parent.locationViewModel.getDestinationRoute(
                 from: userLocationCoordinate,
                 to: destinationCoordinate
             ) { route in
                 self.parent.mapView.addOverlay(route.polyline)
+                self.parent.mapState = .polylineAdded
                 
                 let rect = self.parent.mapView.mapRectThatFits(
                     route.polyline.boundingMapRect,
                     edgePadding: .init(top: 64, left: 32, bottom: 475, right: 32)
                 )
+                
                 self.parent.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
             }
         }

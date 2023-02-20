@@ -15,7 +15,7 @@ struct HomeView: View {
     @State private var showingSheet: Bool = false
     private var showingSheetBinding: Binding<Bool> {
         Binding(get: {
-            self.mapState == .locationSelected
+            self.mapState == .locationSelected || self.mapState == .polylineAdded
         }) { _ in
             self.showingSheet = true
         }
@@ -60,6 +60,7 @@ struct HomeView: View {
         // MARK: - Bottom Sheet
         .sheet(isPresented: showingSheetBinding, onDismiss: {
             mapState = .noInput
+            locationViewModel.selectedUberLocation = nil
         }) {
             RideRequestView()
                 .presentationDetents([.height(440)])
