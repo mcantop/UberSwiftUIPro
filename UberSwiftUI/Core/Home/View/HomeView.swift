@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     // MARK: - Properties
     @Environment(\.colorScheme) var scheme
+    @EnvironmentObject var locationViewModel: LocationSearchViewModel
     @State private var mapState: MapState = .noInput
     @State private var showingSheet: Bool = false
     private var showingSheetBinding: Binding<Bool> {
@@ -51,12 +52,17 @@ struct HomeView: View {
                 }
             }
         }
+        .onReceive(LocationManager.shared.$userLocation) { location in
+            if let location = location {
+                locationViewModel.userLocation = location
+            }
+        }
         // MARK: - Bottom Sheet
         .sheet(isPresented: showingSheetBinding, onDismiss: {
             mapState = .noInput
         }) {
             RideRequestView()
-                .presentationDetents([.height(460)])
+                .presentationDetents([.height(440)])
                 .presentationDragIndicator(.visible)
         }
     }

@@ -10,8 +10,11 @@ import SwiftUI
 struct RideRequestView: View {
     // MARK: - Properties
     @Environment(\.colorScheme) var scheme
-    let rows = [
-        GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12), GridItem(.flexible())
+    @State private var selectedRideType: RideType = .uberX
+    private let rows = [
+        GridItem(.flexible(), spacing: 12),
+        GridItem(.flexible(), spacing: 12),
+        GridItem(.flexible())
     ]
     
     // MARK: - Body
@@ -74,9 +77,11 @@ struct RideRequestView: View {
                     .padding(.horizontal)
                 
                 LazyVGrid(columns: rows) {
-                    ForEach(0...2, id: \.self) { _ in
-                        UberCardView()
-                            .frame(height: 150)
+                    ForEach(RideType.allCases) { rideType in
+                        UberCardView(
+                            selectedRideType: $selectedRideType,
+                            rideType: rideType
+                        )
                     }
                 }
                 .padding(.horizontal)

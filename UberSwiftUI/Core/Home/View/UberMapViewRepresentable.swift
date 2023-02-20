@@ -13,7 +13,7 @@ struct UberMapViewRepresentable: UIViewRepresentable {
     @EnvironmentObject var locationViewModel: LocationSearchViewModel
     @Binding var mapState: MapState
     let mapView = MKMapView()
-    let locationManager = LocationManager()
+    let locationManager = LocationManager.shared
     
     // MARK: - Helpers
     func makeUIView(context: Context) -> some UIView {
