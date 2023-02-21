@@ -11,6 +11,7 @@ struct HomeView: View {
     // MARK: - Properties
     @Environment(\.colorScheme) var scheme
     @EnvironmentObject var locationViewModel: LocationSearchViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
     @State private var mapState: MapState = .noInput
     @State private var showingSheet: Bool = false
     private var showingSheetBinding: Binding<Bool> {
@@ -23,48 +24,54 @@ struct HomeView: View {
     
     // MARK: - Body
     var body: some View {
-        ZStack(alignment: .top) {
-            // MARK: - MapView
-            UberMapViewRepresentable(mapState: $mapState)
-                .ignoresSafeArea()
-            
-            // MARK: - Header
-            VStack(spacing: 0) {
-                HStack(spacing: 8) {
-                    MapViewActionButton(mapState: $mapState)
+        Group {
+            if authViewModel.userSession == nil {
+                LoginView()
+            } else {
+                ZStack(alignment: .top) {
+                    // MARK: - MapView
+                    UberMapViewRepresentable(mapState: $mapState)
+                        .ignoresSafeArea()
                     
-                    if mapState == .noInput {
-                        LocationSearchActivationView(mapState: $mapState)
-                    } else {
-                        Spacer()
+                    // MARK: - Header
+                    VStack(spacing: 0) {
+                        HStack(spacing: 8) {
+                            MapViewActionButton(mapState: $mapState)
+                            
+                            if mapState == .noInput {
+                                LocationSearchActivationView(mapState: $mapState)
+                            } else {
+                                Spacer()
+                            }
+                        }
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 4)
+                        .background(
+                            mapState == .searchingForLocation
+                            ? scheme == .light ? .white : .black
+                            : scheme == .light ? .white.opacity(0) : .black.opacity(0)
+                        )
+                        
+                        if mapState == .searchingForLocation {
+                            LocationSearchView(mapState: $mapState)
+                        }
                     }
                 }
-                .padding(.horizontal, 12)
-                .padding(.vertical, 4)
-                .background(
-                    mapState == .searchingForLocation
-                    ? scheme == .light ? .white : .black
-                    : scheme == .light ? .white.opacity(0) : .black.opacity(0)
-                )
-                
-                if mapState == .searchingForLocation {
-                    LocationSearchView(mapState: $mapState)
+                .onReceive(LocationManager.shared.$userLocation) { location in
+                    if let location = location {
+                        locationViewModel.userLocation = location
+                    }
+                }
+                // MARK: - Bottom Sheet
+                .sheet(isPresented: showingSheetBinding, onDismiss: {
+                    mapState = .noInput
+                    locationViewModel.selectedUberLocation = nil
+                }) {
+                    RideRequestView()
+                        .presentationDetents([.height(440)])
+                        .presentationDragIndicator(.visible)
                 }
             }
-        }
-        .onReceive(LocationManager.shared.$userLocation) { location in
-            if let location = location {
-                locationViewModel.userLocation = location
-            }
-        }
-        // MARK: - Bottom Sheet
-        .sheet(isPresented: showingSheetBinding, onDismiss: {
-            mapState = .noInput
-            locationViewModel.selectedUberLocation = nil
-        }) {
-            RideRequestView()
-                .presentationDetents([.height(440)])
-                .presentationDragIndicator(.visible)
         }
     }
 }

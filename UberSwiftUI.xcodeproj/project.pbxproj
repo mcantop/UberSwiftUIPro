@@ -22,6 +22,21 @@
 		526C535F29A2DE8000BA146C /* RideType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526C535E29A2DE8000BA146C /* RideType.swift */; };
 		526C536129A4182B00BA146C /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526C536029A4182B00BA146C /* Double+Extension.swift */; };
 		526C536329A41A3600BA146C /* UberLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526C536229A41A3600BA146C /* UberLocation.swift */; };
+		526C536829A4243300BA146C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526C536729A4243300BA146C /* LoginView.swift */; };
+		526C536B29A4244900BA146C /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526C536A29A4244900BA146C /* RegistrationView.swift */; };
+		526C536D29A42F7100BA146C /* UberTitleTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526C536C29A42F7100BA146C /* UberTitleTextField.swift */; };
+		526C537129A437FF00BA146C /* UberSocialOptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526C537029A437FF00BA146C /* UberSocialOptionButton.swift */; };
+		526C537329A4382100BA146C /* SocialSignInType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526C537229A4382100BA146C /* SocialSignInType.swift */; };
+		526C537629A43B4700BA146C /* UberBottomSignText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526C537529A43B4700BA146C /* UberBottomSignText.swift */; };
+		526C537829A43CB600BA146C /* BottomSignTextType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526C537729A43CB600BA146C /* BottomSignTextType.swift */; };
+		526C537A29A43D1A00BA146C /* UberWideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526C537929A43D1A00BA146C /* UberWideButton.swift */; };
+		526C537C29A4417600BA146C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 526C537B29A4417600BA146C /* GoogleService-Info.plist */; };
+		526C537F29A4423100BA146C /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 526C537E29A4423100BA146C /* FirebaseAuth */; };
+		526C538129A4423100BA146C /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 526C538029A4423100BA146C /* FirebaseFirestore */; };
+		526C538329A4423100BA146C /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 526C538229A4423100BA146C /* FirebaseFirestoreSwift */; };
+		526C538529A4423100BA146C /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 526C538429A4423100BA146C /* FirebaseStorage */; };
+		526C538729A443C700BA146C /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526C538629A443C700BA146C /* AuthViewModel.swift */; };
+		526C538929A44D2800BA146C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526C538829A44D2800BA146C /* User.swift */; };
 		52B8C73929A189640069D0EE /* MapState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B8C73829A189640069D0EE /* MapState.swift */; };
 		52FF40E2299F27B4009B2F8B /* LocationSearchActivationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FF40E1299F27B4009B2F8B /* LocationSearchActivationView.swift */; };
 		52FF40E4299F2DC8009B2F8B /* MapViewActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FF40E3299F2DC8009B2F8B /* MapViewActionButton.swift */; };
@@ -44,6 +59,17 @@
 		526C535E29A2DE8000BA146C /* RideType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideType.swift; sourceTree = "<group>"; };
 		526C536029A4182B00BA146C /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		526C536229A41A3600BA146C /* UberLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UberLocation.swift; sourceTree = "<group>"; };
+		526C536729A4243300BA146C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		526C536A29A4244900BA146C /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
+		526C536C29A42F7100BA146C /* UberTitleTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UberTitleTextField.swift; sourceTree = "<group>"; };
+		526C537029A437FF00BA146C /* UberSocialOptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UberSocialOptionButton.swift; sourceTree = "<group>"; };
+		526C537229A4382100BA146C /* SocialSignInType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSignInType.swift; sourceTree = "<group>"; };
+		526C537529A43B4700BA146C /* UberBottomSignText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UberBottomSignText.swift; sourceTree = "<group>"; };
+		526C537729A43CB600BA146C /* BottomSignTextType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSignTextType.swift; sourceTree = "<group>"; };
+		526C537929A43D1A00BA146C /* UberWideButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UberWideButton.swift; sourceTree = "<group>"; };
+		526C537B29A4417600BA146C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		526C538629A443C700BA146C /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		526C538829A44D2800BA146C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		52B8C73829A189640069D0EE /* MapState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapState.swift; sourceTree = "<group>"; };
 		52FF40E1299F27B4009B2F8B /* LocationSearchActivationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchActivationView.swift; sourceTree = "<group>"; };
 		52FF40E3299F2DC8009B2F8B /* MapViewActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewActionButton.swift; sourceTree = "<group>"; };
@@ -54,6 +80,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				526C537F29A4423100BA146C /* FirebaseAuth in Frameworks */,
+				526C538529A4423100BA146C /* FirebaseStorage in Frameworks */,
+				526C538129A4423100BA146C /* FirebaseFirestore in Frameworks */,
+				526C538329A4423100BA146C /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				52417EB4299F1ED5007685DB /* UberSwiftUI */,
+				526C537B29A4417600BA146C /* GoogleService-Info.plist */,
 				52417EB9299F1ED6007685DB /* Assets.xcassets */,
 				52417EB3299F1ED5007685DB /* Products */,
 			);
@@ -102,8 +133,11 @@
 			isa = PBXGroup;
 			children = (
 				52B8C73829A189640069D0EE /* MapState.swift */,
-				526C535E29A2DE8000BA146C /* RideType.swift */,
 				526C536229A41A3600BA146C /* UberLocation.swift */,
+				526C535E29A2DE8000BA146C /* RideType.swift */,
+				526C537229A4382100BA146C /* SocialSignInType.swift */,
+				526C537729A43CB600BA146C /* BottomSignTextType.swift */,
+				526C538829A44D2800BA146C /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -128,6 +162,7 @@
 		52417EC6299F1F5E007685DB /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				526C536429A4240800BA146C /* Auth */,
 				52FF40DB299F2737009B2F8B /* Home */,
 				52FF40DC299F276A009B2F8B /* LocationSearch */,
 				5262AF9129A27C8700745715 /* Trips */,
@@ -167,6 +202,36 @@
 				5262AF9429A2A75200745715 /* UberCardView.swift */,
 			);
 			path = Trips;
+			sourceTree = "<group>";
+		};
+		526C536429A4240800BA146C /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				526C536529A4240F00BA146C /* View */,
+				526C536629A4241200BA146C /* ViewModel */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		526C536529A4240F00BA146C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				526C536729A4243300BA146C /* LoginView.swift */,
+				526C536A29A4244900BA146C /* RegistrationView.swift */,
+				526C536C29A42F7100BA146C /* UberTitleTextField.swift */,
+				526C537029A437FF00BA146C /* UberSocialOptionButton.swift */,
+				526C537529A43B4700BA146C /* UberBottomSignText.swift */,
+				526C537929A43D1A00BA146C /* UberWideButton.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		526C536629A4241200BA146C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				526C538629A443C700BA146C /* AuthViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		52FF40DB299F2737009B2F8B /* Home */ = {
@@ -221,6 +286,12 @@
 			dependencies = (
 			);
 			name = UberSwiftUI;
+			packageProductDependencies = (
+				526C537E29A4423100BA146C /* FirebaseAuth */,
+				526C538029A4423100BA146C /* FirebaseFirestore */,
+				526C538229A4423100BA146C /* FirebaseFirestoreSwift */,
+				526C538429A4423100BA146C /* FirebaseStorage */,
+			);
 			productName = UberSwiftUI;
 			productReference = 52417EB2299F1ED5007685DB /* UberSwiftUI.app */;
 			productType = "com.apple.product-type.application";
@@ -249,6 +320,9 @@
 				Base,
 			);
 			mainGroup = 52417EA9299F1ED5007685DB;
+			packageReferences = (
+				526C537D29A4423100BA146C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 52417EB3299F1ED5007685DB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -265,6 +339,7 @@
 			files = (
 				52417EBD299F1ED6007685DB /* Preview Assets.xcassets in Resources */,
 				52417EBA299F1ED6007685DB /* Assets.xcassets in Resources */,
+				526C537C29A4417600BA146C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,20 +350,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				526C538929A44D2800BA146C /* User.swift in Sources */,
+				526C537329A4382100BA146C /* SocialSignInType.swift in Sources */,
 				520EBF9C299F32CD00996677 /* LocationSearchView.swift in Sources */,
+				526C537829A43CB600BA146C /* BottomSignTextType.swift in Sources */,
 				52417ED0299F215B007685DB /* LocationManager.swift in Sources */,
 				520EBFA1299F43DD00996677 /* View+Extension.swift in Sources */,
+				526C536B29A4244900BA146C /* RegistrationView.swift in Sources */,
 				520EBFA529A06A4E00996677 /* LocationSearchViewModel.swift in Sources */,
 				526C536329A41A3600BA146C /* UberLocation.swift in Sources */,
 				52FF40E4299F2DC8009B2F8B /* MapViewActionButton.swift in Sources */,
 				52B8C73929A189640069D0EE /* MapState.swift in Sources */,
+				526C537A29A43D1A00BA146C /* UberWideButton.swift in Sources */,
 				52417EB6299F1ED5007685DB /* UberSwiftUIApp.swift in Sources */,
 				526C535F29A2DE8000BA146C /* RideType.swift in Sources */,
 				526C536129A4182B00BA146C /* Double+Extension.swift in Sources */,
+				526C536829A4243300BA146C /* LoginView.swift in Sources */,
+				526C537629A43B4700BA146C /* UberBottomSignText.swift in Sources */,
 				52417ECE299F1FE6007685DB /* UberMapViewRepresentable.swift in Sources */,
+				526C537129A437FF00BA146C /* UberSocialOptionButton.swift in Sources */,
 				5262AF9329A27CA500745715 /* RideRequestView.swift in Sources */,
 				5262AF9529A2A75200745715 /* UberCardView.swift in Sources */,
+				526C538729A443C700BA146C /* AuthViewModel.swift in Sources */,
 				520EBFA3299F468E00996677 /* LocationSearchResultCell.swift in Sources */,
+				526C536D29A42F7100BA146C /* UberTitleTextField.swift in Sources */,
 				52417ECC299F1F9C007685DB /* HomeView.swift in Sources */,
 				52FF40E2299F27B4009B2F8B /* LocationSearchActivationView.swift in Sources */,
 			);
@@ -493,6 +578,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		526C537D29A4423100BA146C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		526C537E29A4423100BA146C /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 526C537D29A4423100BA146C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		526C538029A4423100BA146C /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 526C537D29A4423100BA146C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		526C538229A4423100BA146C /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 526C537D29A4423100BA146C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
+		526C538429A4423100BA146C /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 526C537D29A4423100BA146C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 52417EAA299F1ED5007685DB /* Project object */;
 }

@@ -9,8 +9,9 @@ import SwiftUI
 
 struct MapViewActionButton: View {
     // MARK: - Properties
-    @EnvironmentObject var locationViewModel: LocationSearchViewModel
     @Environment(\.colorScheme) var scheme
+    @EnvironmentObject var locationViewModel: LocationSearchViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
     @Binding var mapState: MapState
     
     // MARK: - Body
@@ -37,7 +38,7 @@ private extension MapViewActionButton {
     func actionForState(_ state: MapState) {
         switch state {
         case .noInput:
-            break
+            authViewModel.signOut()
         case .searchingForLocation:
             mapState = .noInput
         case .locationSelected, .polylineAdded:
