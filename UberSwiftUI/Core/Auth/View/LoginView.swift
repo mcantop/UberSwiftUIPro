@@ -17,7 +17,6 @@ struct LoginView: View {
     private var buttonTextColor: Color {
         return scheme == .light ? .white : .black
     }
-    
     private var buttonBackgroundColor: Color {
         return scheme == .light ? .black : .white
     }
@@ -125,5 +124,6 @@ struct LoginView: View {
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView()
+            .environmentObject(AuthViewModel())
     }
 }

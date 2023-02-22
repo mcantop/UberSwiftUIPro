@@ -8,10 +8,12 @@
 import CoreLocation
 
 final class LocationManager: NSObject, ObservableObject {
+    // MARK: - Properties
     @Published var userLocation: CLLocationCoordinate2D?
     static let shared = LocationManager()
     private let locationManager = CLLocationManager()
     
+    // MARK: - Lifecycle
     override init() {
         super.init()
         locationManager.delegate = self

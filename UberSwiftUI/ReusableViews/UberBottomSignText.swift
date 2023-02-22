@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct UberBottomSignText: View {
+    // MARK: - Properties
     let type: BottomSignTextType
     
+    // MARK: - Body
     var body: some View {
         Text(type.text)
             .font(.subheadline)

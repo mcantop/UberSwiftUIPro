@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct UberWideButton: View {
+    // MARK: - Properties
     let text: String
     let imageName: String?
     let buttonTextColor: Color
     let buttonBackgroundColor: Color
     let action: () -> Void
     
+    // MARK: - Init
     init(_ text: String, imageName: String, buttonTextColor: Color, buttonBackgroundColor: Color, action: @escaping () -> Void) {
         self.text = text
         self.imageName = imageName
@@ -22,6 +24,7 @@ struct UberWideButton: View {
         self.action = action
     }
     
+    // MARK: - Body
     var body: some View {
         Button {
             action()

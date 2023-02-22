@@ -13,6 +13,7 @@ struct MapViewActionButton: View {
     @EnvironmentObject var locationViewModel: LocationSearchViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
     @Binding var mapState: MapState
+    @Binding var showingSideMenu: Bool
     
     // MARK: - Body
     var body: some View {
@@ -26,8 +27,10 @@ struct MapViewActionButton: View {
                 .fontWeight(.semibold)
                 .foregroundColor(.primary)
                 .frame(width: 50, height: 50)
-                .background(scheme == .light ? .white : .black)
-                .capsuleOverlay()
+                .background(Color(.systemGray6))
+                .overlay(
+                    Circle().stroke(Color(.systemGray4), lineWidth: 2)
+                )
                 .clipShape(Circle())
         }
     }
@@ -38,7 +41,7 @@ private extension MapViewActionButton {
     func actionForState(_ state: MapState) {
         switch state {
         case .noInput:
-            authViewModel.signOut()
+            showingSideMenu.toggle()
         case .searchingForLocation:
             mapState = .noInput
         case .locationSelected, .polylineAdded:
@@ -62,7 +65,7 @@ private extension MapViewActionButton {
 
 struct MapViewActionButton_Previews: PreviewProvider {
     static var previews: some View {
-        MapViewActionButton(mapState: .constant(.noInput))
+        MapViewActionButton(mapState: .constant(.noInput), showingSideMenu: .constant(false))
             .environmentObject(LocationSearchViewModel())
     }
 }

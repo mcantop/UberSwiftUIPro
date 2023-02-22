@@ -14,6 +14,7 @@ struct UberTitleTextField: View {
     var isSecure: Bool
     @Binding var text: String
     
+    // MARK: - Init
     init(_ title: String, placeholder: String?, isSecure: Bool = false, text: Binding<String>) {
         self.title = title
         self.placeholder = placeholder

@@ -11,6 +11,10 @@ enum SocialSignInType: Int, CaseIterable, Identifiable {
     case facebook
     case google
     
+    var id: Int {
+        return rawValue
+    }
+    
     var logo: String {
         switch self {
         case .facebook:
@@ -18,9 +22,5 @@ enum SocialSignInType: Int, CaseIterable, Identifiable {
         case .google:
             return "google-logo"
         }
-    }
-    
-    var id: Int {
-        return rawValue
     }
 }

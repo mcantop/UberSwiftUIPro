@@ -104,7 +104,7 @@ extension UberMapViewRepresentable {
                 
                 let rect = self.parent.mapView.mapRectThatFits(
                     route.polyline.boundingMapRect,
-                    edgePadding: .init(top: 64, left: 32, bottom: 475, right: 32)
+                    edgePadding: .init(top: 96, left: 32, bottom: 500, right: 32)
                 )
                 
                 self.parent.mapView.setRegion(MKCoordinateRegion(rect), animated: true)

@@ -19,7 +19,6 @@ struct RegistrationView: View {
     private var buttonTextColor: Color {
         return scheme == .light ? .white : .black
     }
-    
     private var buttonBackgroundColor: Color {
         return scheme == .light ? .black : .white
     }
@@ -115,5 +114,6 @@ struct RegistrationView: View {
 struct RegistrationView_Previews: PreviewProvider {
     static var previews: some View {
         RegistrationView()
+            .environmentObject(AuthViewModel())
     }
 }

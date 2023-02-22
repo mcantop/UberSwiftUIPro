@@ -8,6 +8,11 @@
 import Foundation
 import MapKit
 
+enum LocationResultsViewConfig {
+    case ride
+    case saveLocation
+}
+
 final class LocationSearchViewModel: NSObject, ObservableObject {
     // MARK: - Properties
     @Published var results = [MKLocalSearchCompletion]()
@@ -19,6 +24,7 @@ final class LocationSearchViewModel: NSObject, ObservableObject {
     var queryFragment = "" {
         didSet {
             guard !queryFragment.isEmpty else {
+                /// Clear search result if no text inside textfield.
                 results = []
                 return
             }
@@ -39,18 +45,23 @@ final class LocationSearchViewModel: NSObject, ObservableObject {
 
 // MARK: - Public Helpers
 extension LocationSearchViewModel {
-    func selectLocation(_ localSearch: MKLocalSearchCompletion) {
-        searchForLocalSearchCompletion(localSearch) { response, error in
-            if let error = error {
-                print("DEBUG: Location search failed with error - \(error.localizedDescription)")
-                return
+    func selectLocation(_ localSearch: MKLocalSearchCompletion, config: LocationResultsViewConfig) {
+        switch config {
+        case .ride:
+            searchForLocalSearchCompletion(localSearch) { response, error in
+                if let error = error {
+                    print("DEBUG: Location search failed with error - \(error.localizedDescription)")
+                    return
+                }
+                guard let item = response?.mapItems.first else { return }
+                let coordinate = item.placemark.coordinate
+                self.selectedUberLocation = UberLocation(
+                    title: localSearch.title,
+                    coordinate: coordinate
+                )
             }
-            guard let item = response?.mapItems.first else { return }
-            let coordinate = item.placemark.coordinate
-            self.selectedUberLocation = UberLocation(
-                title: localSearch.title,
-                coordinate: coordinate
-            )
+        case .saveLocation:
+            print("DEBUG: Save location here..")
         }
     }
     

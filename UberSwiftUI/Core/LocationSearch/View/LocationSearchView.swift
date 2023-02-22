@@ -9,15 +9,19 @@ import SwiftUI
 
 struct LocationSearchView: View {
     // MARK: - Properties
-    @Binding var mapState: MapState
     @Environment(\.colorScheme) var scheme
     @EnvironmentObject var locationViewModel: LocationSearchViewModel
+    
+    private var backgroundColor: Color {
+        return scheme == .light ? .white : .black
+    }
     
     // MARK: - Body
     var body: some View {
         VStack(spacing: 0) {
             // MARK: - Header
             ZStack {
+                // TODO: Refactor
                 Rectangle()
                     .fill(scheme == .light ? .white : .black)
                     .frame(height: 102)
@@ -53,14 +57,14 @@ struct LocationSearchView: View {
                                 .padding(.horizontal, 12)
                                 .padding(.vertical, 8)
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                                .background(.gray.opacity(0.15))
+                                .background(Color(.systemGray6))
                                 .clipShape(Capsule())
                                 .frame(maxHeight: .infinity)
                             
                             TextField("Where to?", text: $locationViewModel.queryFragment)
                                 .padding(.horizontal, 12)
                                 .padding(.vertical, 8)
-                                .background(.gray.opacity(0.25))
+                                .background(Color(.systemGray5))
                                 .clipShape(Capsule())
                                 .frame(maxHeight: .infinity)
                         }
@@ -74,27 +78,18 @@ struct LocationSearchView: View {
             }
             
             // MARK: - ScrollView
-            ScrollView(showsIndicators: false) {
-                VStack {
-                    ForEach(locationViewModel.results, id: \.self) { result in
-                        LocationSearchResultCell(name: result.title, address: result.subtitle)
-                            .onTapGesture {
-                                withAnimation(.easeInOut(duration: 0.25)) {
-                                    locationViewModel.selectLocation(result)
-                                    mapState = .locationSelected
-                                }
-                            }
-                    }
-                }
-            }
+            LocationSearchResultsView(
+                locationViewModel: locationViewModel,
+                config: .ride
+            )
         }
-        .background(scheme == .light ? .white : .black)
+        .background(backgroundColor)
     }
 }
 
 struct LocationSearchView_Previews: PreviewProvider {
     static var previews: some View {
-        LocationSearchView(mapState: .constant(.searchingForLocation))
+        LocationSearchView()
             .environmentObject(LocationSearchViewModel())
     }
 }

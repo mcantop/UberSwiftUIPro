@@ -26,8 +26,10 @@ struct LocationSearchActivationView: View {
         .font(.title3)
         .padding(.horizontal, 16)
         .frame(height: 52)
-        .background(scheme == .light ? .white : .black)
-        .capsuleOverlay()
+        .background(Color(.systemGray6))
+        .overlay(
+            Capsule().stroke(Color(.systemGray4), lineWidth: 2)
+        )
         .clipShape(Capsule())
         .onTapGesture {
             withAnimation(.easeInOut(duration: 0.25)) {
