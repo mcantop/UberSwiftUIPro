@@ -24,10 +24,10 @@ struct SettingsView: View {
                 Section("Favorites") {
                     ForEach(FavoriteLocationViewModel.allCases) { viewModel in
                         NavigationLink {
-                            FavoriteLocationSearchView()
+                            FavoriteLocationSearchView(config: viewModel)
                                 .navigationTitle("Add \(viewModel.title)")
                         } label: {
-                            FavoriteLocationRowView(viewModel)
+                            FavoriteLocationRowView(viewModel, user: user)
                         }
                     }
                 }

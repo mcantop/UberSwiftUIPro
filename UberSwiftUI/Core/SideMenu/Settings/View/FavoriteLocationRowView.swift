@@ -10,10 +10,12 @@ import SwiftUI
 struct FavoriteLocationRowView: View {
     // MARK: - Properties
     let viewModel: FavoriteLocationViewModel
+    let user: User
     
     // MARK: - Init
-    init(_ viewModel: FavoriteLocationViewModel) {
+    init(_ viewModel: FavoriteLocationViewModel, user: User) {
         self.viewModel = viewModel
+        self.user = user
     }
     
     // MARK: - Body
@@ -29,7 +31,7 @@ struct FavoriteLocationRowView: View {
                     .font(.subheadline)
                     .fontWeight(.semibold)
                 
-                Text("Add \(viewModel.title)")
+                Text(viewModel.subtitle(user: user))
                     .font(.footnote)
                     .foregroundColor(.secondary)
             }
@@ -41,6 +43,10 @@ struct FavoriteLocationRowView: View {
 
 struct FavoriteLocationView_Previews: PreviewProvider {
     static var previews: some View {
-        FavoriteLocationRowView(.work)
+        FavoriteLocationRowView(.work, user: User(
+            fullname: "Gunna Wunna",
+            email: "gunna@wunna.com",
+            uid: "123456"
+        ))
     }
 }

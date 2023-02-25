@@ -12,6 +12,7 @@ struct FavoriteLocationSearchView: View {
     @Environment(\.colorScheme) var scheme
     @State private var text = ""
     @StateObject var locationViewModel = LocationSearchViewModel()
+    let config: FavoriteLocationViewModel
     
     // MARK: - Body
     var body: some View {
@@ -40,7 +41,7 @@ struct FavoriteLocationSearchView: View {
             
             LocationSearchResultsView(
                 locationViewModel: locationViewModel,
-                config: .saveLocation
+                config: .saveLocation(config)
             )
         }
     }
@@ -49,7 +50,7 @@ struct FavoriteLocationSearchView: View {
 struct FavoriteLocationSearchView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            FavoriteLocationSearchView()
+            FavoriteLocationSearchView(config: .work)
         }
     }
 }

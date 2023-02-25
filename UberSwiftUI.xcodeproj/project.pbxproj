@@ -47,6 +47,7 @@
 		5295235529A50ABA00F878D9 /* FavoriteLocationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295235429A50ABA00F878D9 /* FavoriteLocationRowView.swift */; };
 		5295235729A50C5600F878D9 /* SettingsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295235629A50C5600F878D9 /* SettingsRowView.swift */; };
 		52B8C73929A189640069D0EE /* MapState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B8C73829A189640069D0EE /* MapState.swift */; };
+		52C9175829A8069C003330B6 /* FavoriteLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C9175729A8069C003330B6 /* FavoriteLocation.swift */; };
 		52FF40E2299F27B4009B2F8B /* LocationSearchActivationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FF40E1299F27B4009B2F8B /* LocationSearchActivationView.swift */; };
 		52FF40E4299F2DC8009B2F8B /* MapViewActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FF40E3299F2DC8009B2F8B /* MapViewActionButton.swift */; };
 /* End PBXBuildFile section */
@@ -58,7 +59,6 @@
 		5227027329A567EE00C65A9C /* FavoriteLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteLocationViewModel.swift; sourceTree = "<group>"; };
 		5227027529A56ADD00C65A9C /* FavoriteLocationSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteLocationSearchView.swift; sourceTree = "<group>"; };
 		5227027829A5716100C65A9C /* LocationSearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchResultsView.swift; sourceTree = "<group>"; };
-		5227027A29A6D05E00C65A9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		52417EB2299F1ED5007685DB /* UberSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UberSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52417EB5299F1ED5007685DB /* UberSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UberSwiftUIApp.swift; sourceTree = "<group>"; };
 		52417EB9299F1ED6007685DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -90,6 +90,7 @@
 		5295235429A50ABA00F878D9 /* FavoriteLocationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteLocationRowView.swift; sourceTree = "<group>"; };
 		5295235629A50C5600F878D9 /* SettingsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowView.swift; sourceTree = "<group>"; };
 		52B8C73829A189640069D0EE /* MapState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapState.swift; sourceTree = "<group>"; };
+		52C9175729A8069C003330B6 /* FavoriteLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteLocation.swift; sourceTree = "<group>"; };
 		52FF40E1299F27B4009B2F8B /* LocationSearchActivationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchActivationView.swift; sourceTree = "<group>"; };
 		52FF40E3299F2DC8009B2F8B /* MapViewActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewActionButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -143,7 +144,6 @@
 		52417EB4299F1ED5007685DB /* UberSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				5227027A29A6D05E00C65A9C /* Info.plist */,
 				52417EC7299F1F61007685DB /* App */,
 				52417EC6299F1F5E007685DB /* Core */,
 				52417EC5299F1F5D007685DB /* Extensions */,
@@ -172,6 +172,7 @@
 				526C535E29A2DE8000BA146C /* RideType.swift */,
 				526C537229A4382100BA146C /* SocialSignInType.swift */,
 				526C537729A43CB600BA146C /* BottomSignTextType.swift */,
+				52C9175729A8069C003330B6 /* FavoriteLocation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -449,6 +450,7 @@
 				5227027629A56ADD00C65A9C /* FavoriteLocationSearchView.swift in Sources */,
 				52FF40E4299F2DC8009B2F8B /* MapViewActionButton.swift in Sources */,
 				52B8C73929A189640069D0EE /* MapState.swift in Sources */,
+				52C9175829A8069C003330B6 /* FavoriteLocation.swift in Sources */,
 				526C537A29A43D1A00BA146C /* UberWideButton.swift in Sources */,
 				52417EB6299F1ED5007685DB /* UberSwiftUIApp.swift in Sources */,
 				526C535F29A2DE8000BA146C /* RideType.swift in Sources */,
@@ -606,7 +608,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -638,7 +640,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
