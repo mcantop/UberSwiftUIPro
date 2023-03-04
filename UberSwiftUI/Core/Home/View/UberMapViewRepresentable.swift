@@ -11,6 +11,7 @@ import MapKit
 struct UberMapViewRepresentable: UIViewRepresentable {
     // MARK: - Properties
     @EnvironmentObject var locationViewModel: LocationSearchViewModel
+    @EnvironmentObject var homeViewModel: HomeViewModel
     @Binding var mapState: MapState
     let mapView = MKMapView()
     let locationManager = LocationManager.shared
@@ -28,6 +29,7 @@ struct UberMapViewRepresentable: UIViewRepresentable {
         switch mapState {
         case .noInput:
             context.coordinator.clearMapViewRecenter()
+            context.coordinator.addDriversToMap(homeViewModel.drivers)
         case .searchingForLocation, .polylineAdded:
             break
         case .locationSelected:
@@ -78,6 +80,17 @@ extension UberMapViewRepresentable {
             return polyline
         }
         
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            if let annotation = annotation as? DriverAnnotation {
+                let view = MKAnnotationView(annotation: annotation, reuseIdentifier: "driver")
+                let image = UIImage(named: "chevron-sign-to-right-2")
+                view.image = image
+                return view
+            }
+            
+            return nil
+        }
+        
         // MARK: - Helpers
         func addAndSelectAnnotation(coordinate: CLLocationCoordinate2D) {
             /// Remove any potential annotations that could have been added before.
@@ -118,6 +131,11 @@ extension UberMapViewRepresentable {
             if let currentRegion = currentRegion {
                 parent.mapView.setRegion(currentRegion, animated: true)
             }
+        }
+        
+        func addDriversToMap(_ drivers: [User]) {
+            let annotations = drivers.map { DriverAnnotation(driver: $0) }
+            self.parent.mapView.addAnnotations(annotations)
         }
     }
 }

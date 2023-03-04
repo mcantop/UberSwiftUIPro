@@ -43,10 +43,6 @@ struct FavoriteLocationRowView: View {
 
 struct FavoriteLocationView_Previews: PreviewProvider {
     static var previews: some View {
-        FavoriteLocationRowView(.work, user: User(
-            fullname: "Gunna Wunna",
-            email: "gunna@wunna.com",
-            uid: "123456"
-        ))
+        FavoriteLocationRowView(.work, user: dev.mockUser)
     }
 }

@@ -49,12 +49,6 @@ struct UberUserInfoView: View {
 
 struct UberUserInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        UberUserInfoView(
-            User(
-                fullname: "Gunna Wunna",
-                email: "gunna@wunna.com",
-                uid: "123456"
-            )
-        )
+        UberUserInfoView(dev.mockUser)
     }
 }

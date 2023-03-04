@@ -12,9 +12,11 @@ struct HomeView: View {
     @Environment(\.colorScheme) var scheme
     @EnvironmentObject var locationViewModel: LocationSearchViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var homeViewModel: HomeViewModel
     @State private var mapState: MapState = .noInput
     @State private var showingSheet = false
     @State private var showingSideMenu = false
+    @State private var settingsDetent = PresentationDetent.medium
     
     // TODO: Refactor
     private var showingSheetBinding: Binding<Bool> {
@@ -116,7 +118,7 @@ extension HomeView {
             }
         }) {
             RideRequestView()
-                .presentationDetents([.height(440)])
+                .presentationDetents([.medium, .height(220)], selection: $settingsDetent)
                 .presentationDragIndicator(.visible)
         }
     }
