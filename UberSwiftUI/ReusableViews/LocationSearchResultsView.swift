@@ -9,18 +9,18 @@ import SwiftUI
 
 struct LocationSearchResultsView: View {
     // MARK: - Properties
-    @StateObject var locationViewModel: LocationSearchViewModel
-    let config: LocationResultsViewConfig
+    @StateObject var homeViewModel: HomeViewModel
+    let config: LocationResultsConfig
     
     // MARK: - Body
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack {
-                ForEach(locationViewModel.results, id: \.self) { result in
+                ForEach(homeViewModel.results, id: \.self) { result in
                     LocationSearchResultCell(name: result.title, address: result.subtitle)
                         .onTapGesture {
                             withAnimation(.easeInOut(duration: 0.25)) {
-                                locationViewModel.selectLocation(
+                                homeViewModel.selectLocation(
                                     result,
                                     config: config
                                 )
@@ -35,7 +35,7 @@ struct LocationSearchResultsView: View {
 struct LocationSearchResultsView_Previews: PreviewProvider {
     static var previews: some View {
         LocationSearchResultsView(
-            locationViewModel: LocationSearchViewModel(),
+            homeViewModel: HomeViewModel(),
             config: .ride
         )
     }

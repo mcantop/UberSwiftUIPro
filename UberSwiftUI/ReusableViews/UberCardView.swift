@@ -10,7 +10,7 @@ import SwiftUI
 struct UberCardView: View {
     // MARK: - Properties
     @Environment(\.colorScheme) var scheme
-    @EnvironmentObject var locationViewModel: LocationSearchViewModel
+    @EnvironmentObject var homeViewModel: HomeViewModel
     @Binding var selectedRideType: RideType
     let rideType: RideType
     
@@ -36,7 +36,7 @@ struct UberCardView: View {
                     .minimumScaleFactor(0.1)
                     .scaleEffect(isSelected ? 1.1 : 1)
                 
-                Text(locationViewModel.calculateRidePrice(type: rideType).toCurrency())
+                Text(homeViewModel.calculateRidePrice(type: rideType).toCurrency())
                     .font(.subheadline)
                     .fontWeight(.thin)
                     .lineLimit(1)
@@ -63,6 +63,6 @@ struct UberCardView: View {
 struct UberCardView_Previews: PreviewProvider {
     static var previews: some View {
         UberCardView(selectedRideType: .constant(.uberX), rideType: .uberX)
-            .environmentObject(LocationSearchViewModel())
+            .environmentObject(HomeViewModel())
     }
 }

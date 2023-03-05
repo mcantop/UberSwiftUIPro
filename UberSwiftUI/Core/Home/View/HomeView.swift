@@ -10,7 +10,6 @@ import SwiftUI
 struct HomeView: View {
     // MARK: - Properties
     @Environment(\.colorScheme) var scheme
-    @EnvironmentObject var locationViewModel: LocationSearchViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var homeViewModel: HomeViewModel
     @State private var mapState: MapState = .noInput
@@ -102,10 +101,10 @@ extension HomeView {
         }
         .onReceive(LocationManager.shared.$userLocation) { location in
             if let location = location {
-                locationViewModel.userLocation = location
+                homeViewModel.userLocation = location
             }
         }
-        .onReceive(locationViewModel.$selectedUberLocation) { location in
+        .onReceive(homeViewModel.$selectedUberLocation) { location in
             if location != nil {
                 self.mapState = .locationSelected
             }
@@ -114,7 +113,7 @@ extension HomeView {
         .sheet(isPresented: showingSheetBinding, onDismiss: {
             withAnimation(.easeInOut(duration: 0.25)) {
                 mapState = .noInput
-                locationViewModel.selectedUberLocation = nil
+                homeViewModel.selectedUberLocation = nil
             }
         }) {
             RideRequestView()
@@ -127,7 +126,7 @@ extension HomeView {
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
-            .environmentObject(LocationSearchViewModel())
+            .environmentObject(HomeViewModel())
             .environmentObject(AuthViewModel())
     }
 }

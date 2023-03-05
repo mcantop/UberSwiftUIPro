@@ -11,7 +11,7 @@ struct FavoriteLocationSearchView: View {
     // MARK: - Properties
     @Environment(\.colorScheme) var scheme
     @State private var text = ""
-    @StateObject var locationViewModel = LocationSearchViewModel()
+    @StateObject var homeViewModel = HomeViewModel()
     let config: FavoriteLocationViewModel
     
     // MARK: - Body
@@ -29,7 +29,7 @@ struct FavoriteLocationSearchView: View {
                         radius: 5, y: 10
                     )
                 
-                TextField("Search for a location..", text: $locationViewModel.queryFragment)
+                TextField("Search for a location..", text: $homeViewModel.queryFragment)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 8)
                     .background(Color(.systemGray5))
@@ -40,7 +40,7 @@ struct FavoriteLocationSearchView: View {
             Spacer()
             
             LocationSearchResultsView(
-                locationViewModel: locationViewModel,
+                homeViewModel: homeViewModel,
                 config: .saveLocation(config)
             )
         }

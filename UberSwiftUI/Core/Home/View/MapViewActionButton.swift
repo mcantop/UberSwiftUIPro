@@ -10,7 +10,7 @@ import SwiftUI
 struct MapViewActionButton: View {
     // MARK: - Properties
     @Environment(\.colorScheme) var scheme
-    @EnvironmentObject var locationViewModel: LocationSearchViewModel
+    @EnvironmentObject var homeViewModel: HomeViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
     @Binding var mapState: MapState
     @Binding var showingSideMenu: Bool
@@ -46,7 +46,7 @@ private extension MapViewActionButton {
             mapState = .noInput
         case .locationSelected, .polylineAdded:
             mapState = .noInput
-            locationViewModel.selectedUberLocation = nil
+            homeViewModel.selectedUberLocation = nil
         }
     }
     
@@ -66,6 +66,6 @@ private extension MapViewActionButton {
 struct MapViewActionButton_Previews: PreviewProvider {
     static var previews: some View {
         MapViewActionButton(mapState: .constant(.noInput), showingSideMenu: .constant(false))
-            .environmentObject(LocationSearchViewModel())
+            .environmentObject(HomeViewModel())
     }
 }

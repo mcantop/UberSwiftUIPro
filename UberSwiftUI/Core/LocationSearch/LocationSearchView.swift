@@ -10,7 +10,7 @@ import SwiftUI
 struct LocationSearchView: View {
     // MARK: - Properties
     @Environment(\.colorScheme) var scheme
-    @EnvironmentObject var locationViewModel: LocationSearchViewModel
+    @EnvironmentObject var homeViewModel: HomeViewModel
     
     private var backgroundColor: Color {
         return scheme == .light ? .white : .black
@@ -61,7 +61,7 @@ struct LocationSearchView: View {
                                 .clipShape(Capsule())
                                 .frame(maxHeight: .infinity)
                             
-                            TextField("Where to?", text: $locationViewModel.queryFragment)
+                            TextField("Where to?", text: $homeViewModel.queryFragment)
                                 .padding(.horizontal, 12)
                                 .padding(.vertical, 8)
                                 .background(Color(.systemGray5))
@@ -79,7 +79,7 @@ struct LocationSearchView: View {
             
             // MARK: - ScrollView
             LocationSearchResultsView(
-                locationViewModel: locationViewModel,
+                homeViewModel: homeViewModel,
                 config: .ride
             )
         }
@@ -90,6 +90,6 @@ struct LocationSearchView: View {
 struct LocationSearchView_Previews: PreviewProvider {
     static var previews: some View {
         LocationSearchView()
-            .environmentObject(LocationSearchViewModel())
+            .environmentObject(HomeViewModel())
     }
 }

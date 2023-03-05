@@ -10,7 +10,7 @@ import SwiftUI
 struct RideRequestView: View {
     // MARK: - Properties
     @Environment(\.colorScheme) var scheme
-    @EnvironmentObject var locationViewModel: LocationSearchViewModel
+    @EnvironmentObject var homeViewModel: HomeViewModel
     @State private var selectedRideType: RideType = .uberX
     private let rows = [
         GridItem(.flexible(), spacing: 12),
@@ -48,17 +48,17 @@ struct RideRequestView: View {
                                 Text("Current location")
                                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                                 
-                                Text(locationViewModel.pickupTime ?? "")
+                                Text(homeViewModel.pickupTime ?? "")
                             }
                             .foregroundColor(.gray)
                             
                             Spacer()
                             
                             HStack {
-                                Text(locationViewModel.selectedUberLocation?.title ?? "")
+                                Text(homeViewModel.selectedUberLocation?.title ?? "")
                                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                                 
-                                Text(locationViewModel.dropOffTime ?? "")
+                                Text(homeViewModel.dropOffTime ?? "")
                             }
                             .fontWeight(.semibold)
                         }
@@ -128,7 +128,7 @@ struct RideRequestView: View {
                 
                 // MARK: - Confirm Button
                 Button {
-                    print("DEBUG: Confirm Ride button pressed..")
+                    homeViewModel.requestTrip()
                 } label: {
                     Text("Confirm Ride".uppercased())
                         .fontWeight(.bold)
@@ -149,6 +149,6 @@ struct RideRequestView: View {
 struct RideRequestView_Previews: PreviewProvider {
     static var previews: some View {
         RideRequestView()
-            .environmentObject(LocationSearchViewModel())
+            .environmentObject(HomeViewModel())
     }
 }
