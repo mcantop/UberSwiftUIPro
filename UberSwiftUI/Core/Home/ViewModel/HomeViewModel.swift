@@ -14,6 +14,7 @@ import MapKit
 final class HomeViewModel: NSObject, ObservableObject {
     // MARK: - Properties
     @Published var drivers = [User]()
+    @Published var trip: Trip?
     private let userService = UserSerivce.shared
     private var cancellables = Set<AnyCancellable>()
     private var currentUser: User?
@@ -50,6 +51,24 @@ final class HomeViewModel: NSObject, ObservableObject {
 
 // MARK: - Helpers
 extension HomeViewModel {
+    func fetchUser() {
+        userService.$user
+            .sink { user in
+                self.currentUser = user
+                guard let user = user else { return }
+                
+                if user.accountType == .passenger {
+                    self.fetchDrivers()
+                } else {
+                    self.fetchTrips()
+                }
+            }
+            .store(in: &cancellables)
+    }
+}
+
+// MARK: - Passenger API
+extension HomeViewModel {
     func fetchDrivers() {
         Firestore.firestore().collection("users")
             .whereField("accountType", isEqualTo: AccountType.driver.rawValue)
@@ -60,20 +79,6 @@ extension HomeViewModel {
             }
     }
     
-    func fetchUser() {
-        userService.$user
-            .sink { user in
-                self.currentUser = user
-                guard let user = user else { return }
-                guard user.accountType == .passenger else { return }
-                self.fetchDrivers()
-            }
-            .store(in: &cancellables)
-    }
-}
-
-// MARK: - Passenger API
-extension HomeViewModel {
     func requestTrip() {
         guard let driver = drivers.first,
               let currentUser = currentUser,
@@ -98,6 +103,9 @@ extension HomeViewModel {
         getPlacemarkFrom(location: userLocation) { placemark, _ in
             guard let placemark = placemark else { return }
             
+            let rideCost = self.calculateRidePrice(type: .uberX)
+            let pickupLocationAddress = self.addressFromPlacemark(placemark)
+            
             let trip = Trip(
                 id: UUID().uuidString,
                 passengerUID: currentUser.uid,
@@ -110,8 +118,10 @@ extension HomeViewModel {
                 dropoffLocationName: dropoffLocation.title,
                 pickupLocation: currentUser.coordinates,
                 dropoffLocation: dropoffGeoPoint,
-                pickupLocationAddress: "321 Main Street",
-                rideCost: 50
+                pickupLocationAddress: pickupLocationAddress,
+                rideCost: rideCost,
+                distanceToPassenger: 0,
+                travelTimeToPassenger: 0
             )
             
             print("DEBUG: Trip is \(trip)")
@@ -126,7 +136,33 @@ extension HomeViewModel {
 
 // MARK: - Driver API
 extension HomeViewModel {
-    
+    func fetchTrips() {
+        guard let currentUser = currentUser else { return }
+        
+        Firestore.firestore().collection("trips").whereField("driverUID", isEqualTo: currentUser.uid)
+            .getDocuments { snapshot, _ in
+                guard let documents = snapshot?.documents,
+                      let document = documents.first else {
+                    return
+                }
+                
+                guard let trip = try? document.data(as: Trip.self) else { return }
+                self.trip = trip
+                self.getDestinationRoute(
+                    from: trip.driverLocation.toCoordinate(),
+                    to: trip.pickupLocation.toCoordinate()
+                ) { route in
+                    let travelTimeToPassenger = Int(route.expectedTravelTime / 60)
+                    let distanceToPassenger = route.distance.distanceInKilometeresString()
+                    
+                    self.trip?.travelTimeToPassenger = travelTimeToPassenger
+                    self.trip?.distanceToPassenger = route.distance
+                    
+                    print("DEBUG: Expected travel time to passenger \(travelTimeToPassenger) min")
+                    print("DEBUG: Distance to passenger \(distanceToPassenger) km")
+                }
+            }
+    }
 }
 
 // MARK: - LocationSearch Helpers
@@ -229,8 +265,27 @@ extension HomeViewModel {
         formatter.dateFormat = "hh:mm a"
         
         let now = Date()
+        
         pickupTime = formatter.string(from: now)
         dropOffTime = formatter.string(from: now + expectedTravelTime)
+    }
+    
+    func addressFromPlacemark(_ placemark: CLPlacemark) -> String {
+        var result = ""
+        
+        if let thoroughfare = placemark.thoroughfare {
+            result += thoroughfare
+        }
+        
+        if let subThoroughfare = placemark.subThoroughfare {
+            result += " \(subThoroughfare)"
+        }
+        
+        if let subAdministrativeArea = placemark.subAdministrativeArea {
+            result += ", \(subAdministrativeArea)"
+        }
+        
+        return result
     }
 }
 

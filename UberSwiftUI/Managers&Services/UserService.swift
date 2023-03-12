@@ -24,7 +24,7 @@ final class UserSerivce: ObservableObject {
             guard let user = try? snapshot.data(as: User.self) else { return }
             self.user = user
 
-            print("DEBUG: Fetching successful. Current user is \(user).")
+            print("DEBUG: User fetching successful..")
         }
     }
 }

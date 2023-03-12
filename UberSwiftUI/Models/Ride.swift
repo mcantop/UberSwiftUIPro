@@ -27,4 +27,7 @@ struct Trip: Identifiable, Codable {
     let pickupLocationAddress: String
     
     let rideCost: Double
+    
+    var distanceToPassenger: Double
+    var travelTimeToPassenger: Int
 }

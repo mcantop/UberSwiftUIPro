@@ -7,8 +7,20 @@
 
 import Foundation
 
+// MARK: - Public Helpers
 extension Double {
-    private var currencyFormatter: NumberFormatter {
+    func toCurrency() -> String {
+        return currencyFormatter.string(for: self) ?? ""
+    }
+    
+    func distanceInKilometeresString() -> String {
+        return distanceFormatter.string(for: self / 1000) ?? ""
+    }
+}
+
+// MARK: - Private Helpers
+private extension Double {
+    var currencyFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.minimumFractionDigits = 2
@@ -16,7 +28,11 @@ extension Double {
         return formatter
     }
     
-    func toCurrency() -> String {
-        return currencyFormatter.string(for: self) ?? ""
+    var distanceFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 1
+        return formatter
     }
 }

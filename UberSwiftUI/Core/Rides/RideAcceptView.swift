@@ -8,15 +8,24 @@
 import SwiftUI
 import MapKit
 
-struct AcceptRideView: View {
+struct RideAcceptView: View {
     // MARK: - Properties
     @State private var coordinateRegion: MKCoordinateRegion
+    private let trip: Trip
+    private let annotationItem: UberLocation
     
-    init() {
-        let center = CLLocationCoordinate2D(latitude: 37.3346, longitude: -122.0090)
-        let span = MKCoordinateSpan(latitudeDelta: 0.025, longitudeDelta: 0.025)
+    // MARK: - Init
+    init(trip: Trip) {
+        self.trip = trip
+        let center = CLLocationCoordinate2D(latitude: trip.pickupLocation.latitude,
+                                            longitude: trip.pickupLocation.longitude)
+        
+        let span = MKCoordinateSpan(latitudeDelta: 0.025,
+                                    longitudeDelta: 0.025)
         
         self.coordinateRegion = MKCoordinateRegion(center: center, span: span)
+        self.annotationItem = UberLocation(title: trip.pickupLocationName,
+                                           coordinate: trip.pickupLocation.toCoordinate())
     }
     
     // MARK: - Body
@@ -32,7 +41,7 @@ struct AcceptRideView: View {
                 Spacer()
                 
                 VStack {
-                    Text("10")
+                    Text("\(trip.travelTimeToPassenger)")
                     
                     Text("min")
                 }
@@ -57,7 +66,7 @@ struct AcceptRideView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     Spacer()
                     
-                    Text("SUPER HENDRIX")
+                    Text(trip.passengerName)
                         .font(.headline)
                     
                     Spacer()
@@ -65,7 +74,7 @@ struct AcceptRideView: View {
                     HStack {
                         Image(systemName: "star.fill")
                             .foregroundColor(.yellow)
-                                                
+                        
                         Text("4.8")
                             .foregroundColor(.gray)
                     }
@@ -78,11 +87,11 @@ struct AcceptRideView: View {
                 Spacer()
                 
                 VStack(alignment: .trailing) {
-                    Text("Earnings:")
+                    Text("Earnings")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                     
-                    Text("$22.04")
+                    Text(trip.rideCost.toCurrency())
                         .font(.title)
                         .fontWeight(.semibold)
                 }
@@ -95,16 +104,16 @@ struct AcceptRideView: View {
             VStack(spacing: 16) {
                 VStack(spacing: 4) {
                     HStack {
-                        Text("Apple Campus")
+                        Text(trip.pickupLocationName)
                         
                         Spacer()
                         
-                        Text("5.2")
+                        Text(trip.distanceToPassenger.distanceInKilometeresString())
                     }
                     .font(.headline)
                     
                     HStack {
-                        Text("Infinite Loop 1, Santa Clara County")
+                        Text(trip.pickupLocationAddress)
                         
                         Spacer()
                         
@@ -114,10 +123,12 @@ struct AcceptRideView: View {
                     .foregroundColor(.gray)
                 }
                 
-                Map(coordinateRegion: $coordinateRegion)
-                    .frame(height: 220)
-                    .cornerRadius(10)
-                    .shadow(radius: 5)
+                Map(coordinateRegion: $coordinateRegion, annotationItems: [annotationItem]) { item in
+                    MapMarker(coordinate: item.coordinate)
+                }
+                .frame(height: 220)
+                .cornerRadius(10)
+                .shadow(radius: 5)
             }
             .padding(.horizontal)
             
@@ -157,6 +168,6 @@ struct AcceptRideView: View {
 
 struct AcceptTripView_Previews: PreviewProvider {
     static var previews: some View {
-        AcceptRideView()
+        RideAcceptView(trip: dev.mockTrip)
     }
 }

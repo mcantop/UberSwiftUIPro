@@ -18,9 +18,16 @@ struct HomeView: View {
     @State private var settingsDetent = PresentationDetent.medium
     
     // TODO: Refactor
-    private var showingSheetBinding: Binding<Bool> {
+    private var showingRideRequestBinding: Binding<Bool> {
         Binding(get: {
             self.mapState == .locationSelected || self.mapState == .polylineAdded
+        }) { _ in
+            self.showingSheet = true
+        }
+    }
+    private var showingRideAcceptBinding: Binding<Bool> {
+        Binding(get: {
+            self.homeViewModel.trip != nil
         }) { _ in
             self.showingSheet = true
         }
@@ -109,17 +116,28 @@ extension HomeView {
                 self.mapState = .locationSelected
             }
         }
-        // MARK: - Bottom Sheet
-        .sheet(isPresented: showingSheetBinding, onDismiss: {
+        // MARK: - Ride Request Sheet
+        .sheet(isPresented: showingRideRequestBinding) {
             withAnimation(.easeInOut(duration: 0.25)) {
                 mapState = .noInput
                 homeViewModel.selectedUberLocation = nil
             }
-        }) {
+        } content: {
             RideRequestView()
                 .presentationDetents([.medium, .height(220)], selection: $settingsDetent)
                 .presentationDragIndicator(.visible)
         }
+        // MARK: - Ride Accept Sheet
+        .sheet(isPresented: showingRideAcceptBinding) {
+            print("DEBUG: Decline Ride here..")
+        } content: {
+            if let trip = homeViewModel.trip {
+                RideAcceptView(trip: trip)
+                    .presentationDetents([.height(600)])
+                    .presentationDragIndicator(.visible)
+            }
+        }
+
     }
 }
 
