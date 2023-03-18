@@ -26,7 +26,6 @@ final class DeveloperPrevier {
     )
     
     let mockTrip = Trip(
-        id: UUID().uuidString,
         passengerUID: UUID().uuidString,
         driverUID: UUID().uuidString,
         passengerName: "Passenger Name",
@@ -40,6 +39,7 @@ final class DeveloperPrevier {
         pickupLocationAddress: "123 Main St, Palo Alto CA",
         rideCost: 47,
         distanceToPassenger: 1000,
-        travelTimeToPassenger: 24
+        travelTimeToPassenger: 24,
+        state: .rejected
     )
 }

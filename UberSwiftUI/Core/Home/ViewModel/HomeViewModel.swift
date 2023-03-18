@@ -17,7 +17,8 @@ final class HomeViewModel: NSObject, ObservableObject {
     @Published var trip: Trip?
     private let userService = UserSerivce.shared
     private var cancellables = Set<AnyCancellable>()
-    private var currentUser: User?
+    var currentUser: User?
+    var routeToPickupLocation: MKRoute?
     
     // MARK: - Location Search Properties
     @Published var results = [MKLocalSearchCompletion]()
@@ -59,8 +60,9 @@ extension HomeViewModel {
                 
                 if user.accountType == .passenger {
                     self.fetchDrivers()
+                    self.addTripObserverForPassenger()
                 } else {
-                    self.fetchTrips()
+                    self.addTripObserverForDriver()
                 }
             }
             .store(in: &cancellables)
@@ -107,7 +109,6 @@ extension HomeViewModel {
             let pickupLocationAddress = self.addressFromPlacemark(placemark)
             
             let trip = Trip(
-                id: UUID().uuidString,
                 passengerUID: currentUser.uid,
                 driverUID: driver.uid,
                 passengerName: currentUser.fullname,
@@ -121,7 +122,8 @@ extension HomeViewModel {
                 pickupLocationAddress: pickupLocationAddress,
                 rideCost: rideCost,
                 distanceToPassenger: 0,
-                travelTimeToPassenger: 0
+                travelTimeToPassenger: 0,
+                state: .requested
             )
             
             print("DEBUG: Trip is \(trip)")
@@ -132,21 +134,57 @@ extension HomeViewModel {
             }
         }
     }
+    
+    func addTripObserverForPassenger() {
+        guard let currentUser = currentUser,
+              currentUser.accountType == .passenger else { return }
+        
+        Firestore.firestore().collection("trips").whereField("passengerUID", isEqualTo: currentUser.uid)
+            .addSnapshotListener { snapshot, _ in
+                guard let change = snapshot?.documentChanges.first,
+                      change.type == .added || change.type == .modified else { return }
+                
+                guard let trip = try? change.document.data(as: Trip.self) else { return }
+                self.trip = trip
+                print("DEBUG: Updated trip state is \(trip.state)")
+            }
+    }
 }
 
 // MARK: - Driver API
 extension HomeViewModel {
-    func fetchTrips() {
-        guard let currentUser = currentUser else { return }
+    func rejectTrip() {
+        updateTripState(state: .rejected)
+    }
+    
+    func acceptTrip() {
+        updateTripState(state: .accepted)
+    }
+    
+    private func updateTripState(state: TripState) {
+        guard let trip = trip else { return }
+        
+        var data = ["state": state.rawValue]
+        
+        if state == .accepted {
+            data["travelTimeToPassenger"] = trip.travelTimeToPassenger
+        }
+        
+        Firestore.firestore().collection("trips").document(trip.id).updateData(data) { _ in
+            print("DEBUG: Did update trip with state: \(state)..")
+        }
+    }
+    
+    func addTripObserverForDriver() {
+        guard let currentUser = currentUser,
+              currentUser.accountType == .driver else { return }
         
         Firestore.firestore().collection("trips").whereField("driverUID", isEqualTo: currentUser.uid)
-            .getDocuments { snapshot, _ in
-                guard let documents = snapshot?.documents,
-                      let document = documents.first else {
-                    return
-                }
+            .addSnapshotListener { snapshot, _ in
+                guard let change = snapshot?.documentChanges.first,
+                      change.type == .added || change.type == .modified else { return }
                 
-                guard let trip = try? document.data(as: Trip.self) else { return }
+                guard let trip = try? change.document.data(as: Trip.self) else { return }
                 self.trip = trip
                 self.getDestinationRoute(
                     from: trip.driverLocation.toCoordinate(),
@@ -155,6 +193,7 @@ extension HomeViewModel {
                     let travelTimeToPassenger = Int(route.expectedTravelTime / 60)
                     let distanceToPassenger = route.distance.distanceInKilometeresString()
                     
+                    self.routeToPickupLocation = route
                     self.trip?.travelTimeToPassenger = travelTimeToPassenger
                     self.trip?.distanceToPassenger = route.distance
                     

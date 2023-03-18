@@ -16,7 +16,7 @@ struct UberWideButton: View {
     let action: () -> Void
     
     // MARK: - Init
-    init(_ text: String, imageName: String, buttonTextColor: Color, buttonBackgroundColor: Color, action: @escaping () -> Void) {
+    init(_ text: String, imageName: String? = nil, buttonTextColor: Color, buttonBackgroundColor: Color, action: @escaping () -> Void) {
         self.text = text
         self.imageName = imageName
         self.buttonTextColor = buttonTextColor

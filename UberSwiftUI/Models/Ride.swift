@@ -7,9 +7,16 @@
 
 import Foundation
 import Firebase
+import FirebaseFirestoreSwift
+
+enum TripState: Int, Codable {
+    case requested
+    case rejected
+    case accepted
+}
 
 struct Trip: Identifiable, Codable {
-    let id: String
+    @DocumentID var tripId: String?
     let passengerUID: String
     let driverUID: String
     
@@ -30,4 +37,9 @@ struct Trip: Identifiable, Codable {
     
     var distanceToPassenger: Double
     var travelTimeToPassenger: Int
+    var state: TripState
+    
+    var id: String {
+        return tripId ?? ""
+    }
 }

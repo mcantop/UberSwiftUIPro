@@ -17,17 +17,21 @@ struct HomeView: View {
     @State private var showingSideMenu = false
     @State private var settingsDetent = PresentationDetent.medium
     
-    // TODO: Refactor
+    // TODO: Refactor bindings if possible
+    // They set value to showingSheet which really does nothing
     private var showingRideRequestBinding: Binding<Bool> {
         Binding(get: {
-            self.mapState == .locationSelected || self.mapState == .polylineAdded
+            (self.mapState == .locationSelected || self.mapState == .polylineAdded) &&
+            self.authViewModel.currentUser?.accountType == .passenger
         }) { _ in
             self.showingSheet = true
         }
     }
     private var showingRideAcceptBinding: Binding<Bool> {
         Binding(get: {
-            self.homeViewModel.trip != nil
+            self.homeViewModel.trip != nil &&
+            self.authViewModel.currentUser?.accountType == .driver &&
+            self.mapState == .tripRequested
         }) { _ in
             self.showingSheet = true
         }
@@ -56,10 +60,13 @@ struct HomeView: View {
                                 }
                             }
                         }
+                    
+                    BottomRideStateView(user: user, mapState: mapState)
+                        .edgesIgnoringSafeArea(.bottom)
                 }
                 .onAppear {
                     /// If we want to hide the SideMenu after exiting NavigationLink.
-                     showingSideMenu = false
+                    showingSideMenu = false
                 }
             }
         }
@@ -116,11 +123,26 @@ extension HomeView {
                 self.mapState = .locationSelected
             }
         }
+        .onReceive(homeViewModel.$trip) { trip in
+            guard let trip = trip else { return }
+            
+            withAnimation(.spring()) {
+                switch trip.state {
+                case .requested:
+                    self.mapState = .tripRequested
+                case .rejected:
+                    self.mapState = .tripRejected
+                case .accepted:
+                    self.mapState = .tripAccepted
+                }
+            }
+        }
         // MARK: - Ride Request Sheet
         .sheet(isPresented: showingRideRequestBinding) {
             withAnimation(.easeInOut(duration: 0.25)) {
-                mapState = .noInput
-                homeViewModel.selectedUberLocation = nil
+//                mapState = .noInput
+//                homeViewModel.selectedUberLocation = nil
+                print("DEBUG: HIDDEN XDDD")
             }
         } content: {
             RideRequestView()
@@ -137,7 +159,38 @@ extension HomeView {
                     .presentationDragIndicator(.visible)
             }
         }
+    }
+}
 
+struct BottomRideStateView: View {
+    // MARK: - Properties
+    let user: User
+    let mapState: MapState
+    
+    // MARK: - Body
+    var body: some View {
+        VStack {
+            Spacer()
+            
+            if user.accountType == .passenger {
+                // MARK: - Passenger Views
+                if mapState == .tripRequested {
+                    RideLoadingView()
+                        .transition(.move(edge: .bottom))
+                } else if mapState == .tripAccepted {
+                    RideAcceptedView()
+                        .transition(.move(edge: .bottom))
+                } else if mapState == .tripRejected {
+                    // TODO: Show Rejected View Here..
+                }
+            } else {
+                // MARK: - Driver Views
+                if mapState == .tripAccepted {
+                    PickupPassengerView()
+                        .transition(.move(edge: .bottom))
+                }
+            }
+        }
     }
 }
 

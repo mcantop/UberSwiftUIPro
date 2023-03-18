@@ -36,6 +36,16 @@ struct UberMapViewRepresentable: UIViewRepresentable {
                 context.coordinator.addAndSelectAnnotation(coordinate: coordinate)
                 context.coordinator.configurePolyline(destinationCoordinate: coordinate)
             }
+        case .tripAccepted:
+            guard let trip = homeViewModel.trip,
+                  let route = homeViewModel.routeToPickupLocation,
+                  let driver = homeViewModel.currentUser,
+                  driver.accountType == .driver else { return }
+            
+            context.coordinator.configurePolylineToPickupLocation(route: route)
+            context.coordinator.addAndSelectAnnotation(coordinate: trip.pickupLocation.toCoordinate())
+        default:
+            break
         }
     }
     
@@ -50,7 +60,7 @@ extension UberMapViewRepresentable {
         let parent: UberMapViewRepresentable
         private var userLocationCoordinate: CLLocationCoordinate2D?
         private var currentRegion: MKCoordinateRegion?
-
+        
         // MARK: - Lifecycle
         init(parent: UberMapViewRepresentable) {
             self.parent = parent
@@ -101,7 +111,7 @@ extension UberMapViewRepresentable {
             parent.mapView.addAnnotation(annotation)
             parent.mapView.selectAnnotation(annotation, animated: true)
             /// Changes MapView to fit user and annotation on a screen.
-//            parent.mapView.showAnnotations(parent.mapView.annotations, animated: true)
+            //            parent.mapView.showAnnotations(parent.mapView.annotations, animated: true)
         }
         
         func configurePolyline(destinationCoordinate: CLLocationCoordinate2D) {
@@ -130,6 +140,17 @@ extension UberMapViewRepresentable {
             if let currentRegion = currentRegion {
                 parent.mapView.setRegion(currentRegion, animated: true)
             }
+        }
+        
+        func configurePolylineToPickupLocation(route: MKRoute) {
+            parent.mapView.addOverlay(route.polyline)
+            
+            let rect = parent.mapView.mapRectThatFits(
+                route.polyline.boundingMapRect,
+                edgePadding: .init(top: 96, left: 32, bottom: 400, right: 32)
+            )
+            
+            parent.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
         }
         
         func addDriversToMap(_ drivers: [User]) {

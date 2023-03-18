@@ -10,6 +10,7 @@ import MapKit
 
 struct RideAcceptView: View {
     // MARK: - Properties
+    @EnvironmentObject var homeViewModel: HomeViewModel
     @State private var coordinateRegion: MKCoordinateRegion
     private let trip: Trip
     private let annotationItem: UberLocation
@@ -136,7 +137,7 @@ struct RideAcceptView: View {
             
             HStack(spacing: 16) {
                 Button {
-                    
+                    homeViewModel.rejectTrip()
                 } label: {
                     Text("Reject")
                         .font(.headline)
@@ -149,7 +150,7 @@ struct RideAcceptView: View {
                 }
                 
                 Button {
-                    
+                    homeViewModel.acceptTrip()
                 } label: {
                     Text("Accept")
                         .font(.headline)
@@ -169,5 +170,6 @@ struct RideAcceptView: View {
 struct AcceptTripView_Previews: PreviewProvider {
     static var previews: some View {
         RideAcceptView(trip: dev.mockTrip)
+            .environmentObject(HomeViewModel())
     }
 }
