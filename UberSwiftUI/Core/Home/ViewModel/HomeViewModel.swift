@@ -67,6 +67,68 @@ extension HomeViewModel {
             }
             .store(in: &cancellables)
     }
+    
+    func viewForState(_ state: MapState, user: User) -> some View {
+        let isPassenger = user.accountType == .passenger
+        
+        switch state {
+        case .tripRequested:
+            guard isPassenger else { return AnyView(Text("")) }
+            return AnyView(RideLoadingView())
+        case .tripAccepted:
+            return isPassenger ? AnyView(RideAcceptedView()) : AnyView(PickupPassengerView())
+        case .tripCancelledByPassenger,
+                .tripCancelledByDriver:
+            return AnyView(RideCancelledView())
+        default:
+            break
+        }
+        
+        return AnyView(Text(""))
+    }
+    
+    func deleteTrip() {
+        guard let trip = trip else { return }
+        
+        Firestore.firestore().collection("trips").document(trip.id).delete { _ in
+            self.trip = nil
+        }
+    }
+    
+    private func updateTripState(state: TripState) {
+        guard let trip = trip else { return }
+        
+        var data = ["state": state.rawValue]
+        
+        if state == .accepted {
+            data["travelTimeToPassenger"] = trip.travelTimeToPassenger
+        }
+        
+        Firestore.firestore().collection("trips").document(trip.id).updateData(data) { _ in
+            print("DEBUG: Did update trip with state: \(state)..")
+        }
+    }
+    
+    var tripCancelledMessage: String {
+        guard let user = currentUser,
+              let trip = trip else { return "" }
+        
+        if user.accountType == .passenger {
+            if trip.state == .driverCancelled {
+                return "Your driver has cancelled this trip."
+            } else if trip.state == .passengerCancelled {
+                return "You cancelled this trip."
+            }
+        } else {
+            if trip.state == .driverCancelled {
+                return "You cancelled this trip."
+            } else if trip.state == .passengerCancelled {
+                return "Your passenger has cancelled this trip."
+            }
+        }
+        
+        return ""
+    }
 }
 
 // MARK: - Passenger API
@@ -149,30 +211,24 @@ extension HomeViewModel {
                 print("DEBUG: Updated trip state is \(trip.state)")
             }
     }
+    
+    func cancelTripAsPassenger() {
+        updateTripState(state: .passengerCancelled)
+    }
 }
 
 // MARK: - Driver API
 extension HomeViewModel {
+    func cancelTripAsDriver() {
+        updateTripState(state: .driverCancelled)
+    }
+    
     func rejectTrip() {
         updateTripState(state: .rejected)
     }
     
     func acceptTrip() {
         updateTripState(state: .accepted)
-    }
-    
-    private func updateTripState(state: TripState) {
-        guard let trip = trip else { return }
-        
-        var data = ["state": state.rawValue]
-        
-        if state == .accepted {
-            data["travelTimeToPassenger"] = trip.travelTimeToPassenger
-        }
-        
-        Firestore.firestore().collection("trips").document(trip.id).updateData(data) { _ in
-            print("DEBUG: Did update trip with state: \(state)..")
-        }
     }
     
     func addTripObserverForDriver() {

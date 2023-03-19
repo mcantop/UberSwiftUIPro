@@ -124,7 +124,10 @@ extension HomeView {
             }
         }
         .onReceive(homeViewModel.$trip) { trip in
-            guard let trip = trip else { return }
+            guard let trip = trip else {
+                self.mapState = .noInput
+                return
+            }
             
             withAnimation(.spring()) {
                 switch trip.state {
@@ -134,6 +137,10 @@ extension HomeView {
                     self.mapState = .tripRejected
                 case .accepted:
                     self.mapState = .tripAccepted
+                case .passengerCancelled:
+                    self.mapState = .tripCancelledByPassenger
+                case .driverCancelled:
+                    self.mapState = .tripCancelledByDriver
                 }
             }
         }
@@ -142,7 +149,6 @@ extension HomeView {
             withAnimation(.easeInOut(duration: 0.25)) {
 //                mapState = .noInput
 //                homeViewModel.selectedUberLocation = nil
-                print("DEBUG: HIDDEN XDDD")
             }
         } content: {
             RideRequestView()
@@ -164,6 +170,7 @@ extension HomeView {
 
 struct BottomRideStateView: View {
     // MARK: - Properties
+    @EnvironmentObject var homeViewModel: HomeViewModel
     let user: User
     let mapState: MapState
     
@@ -172,24 +179,8 @@ struct BottomRideStateView: View {
         VStack {
             Spacer()
             
-            if user.accountType == .passenger {
-                // MARK: - Passenger Views
-                if mapState == .tripRequested {
-                    RideLoadingView()
-                        .transition(.move(edge: .bottom))
-                } else if mapState == .tripAccepted {
-                    RideAcceptedView()
-                        .transition(.move(edge: .bottom))
-                } else if mapState == .tripRejected {
-                    // TODO: Show Rejected View Here..
-                }
-            } else {
-                // MARK: - Driver Views
-                if mapState == .tripAccepted {
-                    PickupPassengerView()
-                        .transition(.move(edge: .bottom))
-                }
-            }
+            homeViewModel.viewForState(mapState, user: user)
+                .transition(.move(edge: .bottom))
         }
     }
 }

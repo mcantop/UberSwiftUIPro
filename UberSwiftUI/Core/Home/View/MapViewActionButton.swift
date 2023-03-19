@@ -48,7 +48,9 @@ private extension MapViewActionButton {
                 .polylineAdded,
                 .tripRequested,
                 .tripRejected,
-                .tripAccepted:
+                .tripAccepted,
+                .tripCancelledByPassenger,
+                .tripCancelledByDriver:
             mapState = .noInput
             homeViewModel.selectedUberLocation = nil
         }
@@ -60,12 +62,13 @@ private extension MapViewActionButton {
             return "line.3.horizontal"
         case .searchingForLocation,
                 .locationSelected,
+                .polylineAdded,
                 .tripRequested,
                 .tripRejected,
-                .tripAccepted:
+                .tripAccepted,
+                .tripCancelledByPassenger,
+                .tripCancelledByDriver:
             return "arrow.left"
-        default:
-            return "line.3.horizontal"
         }
     }
 }

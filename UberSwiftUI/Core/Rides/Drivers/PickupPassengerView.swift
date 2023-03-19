@@ -32,7 +32,7 @@ struct PickupPassengerView: View {
                 Spacer()
                 
                 VStack {
-                    Text("\(10)")
+                    Text("\(homeViewModel.trip?.travelTimeToPassenger ?? 0)")
                     
                     Text("min")
                 }
@@ -96,7 +96,7 @@ struct PickupPassengerView: View {
                 buttonTextColor: .white,
                 buttonBackgroundColor: .red
             ) {
-                
+                homeViewModel.cancelTripAsDriver()
             }
             .padding(.horizontal)
         }

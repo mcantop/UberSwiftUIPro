@@ -93,7 +93,7 @@ struct RideAcceptedView: View {
                 buttonTextColor: .white,
                 buttonBackgroundColor: .red
             ) {
-                
+                homeViewModel.cancelTripAsPassenger()
             }
             .padding(.horizontal)
         }

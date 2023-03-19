@@ -57,6 +57,7 @@
 		52B8C73929A189640069D0EE /* MapState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B8C73829A189640069D0EE /* MapState.swift */; };
 		52C48AAB29B3F71300B9358E /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C48AAA29B3F71300B9358E /* UserService.swift */; };
 		52C48AAD29B3FCA200B9358E /* RideAcceptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C48AAC29B3FCA200B9358E /* RideAcceptView.swift */; };
+		52C5B7CB29C74DFF00F9AF37 /* RideCancelledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C5B7CA29C74DFF00F9AF37 /* RideCancelledView.swift */; };
 		52C9175829A8069C003330B6 /* FavoriteLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C9175729A8069C003330B6 /* FavoriteLocation.swift */; };
 		52E8046A29B4F30900CDE40E /* GeoPoint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E8046929B4F30800CDE40E /* GeoPoint+Extension.swift */; };
 		52FF40E2299F27B4009B2F8B /* LocationSearchActivationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FF40E1299F27B4009B2F8B /* LocationSearchActivationView.swift */; };
@@ -111,6 +112,7 @@
 		52B8C73829A189640069D0EE /* MapState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapState.swift; sourceTree = "<group>"; };
 		52C48AAA29B3F71300B9358E /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		52C48AAC29B3FCA200B9358E /* RideAcceptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideAcceptView.swift; sourceTree = "<group>"; };
+		52C5B7CA29C74DFF00F9AF37 /* RideCancelledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideCancelledView.swift; sourceTree = "<group>"; };
 		52C9175729A8069C003330B6 /* FavoriteLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteLocation.swift; sourceTree = "<group>"; };
 		52E8046929B4F30800CDE40E /* GeoPoint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeoPoint+Extension.swift"; sourceTree = "<group>"; };
 		52FF40E1299F27B4009B2F8B /* LocationSearchActivationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchActivationView.swift; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 		5262AF9129A27C8700745715 /* Rides */ = {
 			isa = PBXGroup;
 			children = (
+				52C5B7C929C74DF100F9AF37 /* Shared */,
 				5216756529C5F648001F307B /* Drivers */,
 				5216756629C5F64E001F307B /* Passengers */,
 			);
@@ -367,6 +370,14 @@
 				5295235629A50C5600F878D9 /* SettingsRowView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		52C5B7C929C74DF100F9AF37 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				52C5B7CA29C74DFF00F9AF37 /* RideCancelledView.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		52FF40DB299F2737009B2F8B /* Home */ = {
@@ -508,6 +519,7 @@
 				520EBFA3299F468E00996677 /* LocationSearchResultCell.swift in Sources */,
 				5295234A29A4CB4500F878D9 /* SideMenuOptionViewModel.swift in Sources */,
 				526C536D29A42F7100BA146C /* UberTitleTextField.swift in Sources */,
+				52C5B7CB29C74DFF00F9AF37 /* RideCancelledView.swift in Sources */,
 				529F3B1329B4C2CB00407174 /* LocationResultsConfig.swift in Sources */,
 				5295235729A50C5600F878D9 /* SettingsRowView.swift in Sources */,
 				52C48AAB29B3F71300B9358E /* UserService.swift in Sources */,
